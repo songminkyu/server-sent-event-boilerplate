@@ -1,0 +1,3 @@
+packages:
+  - "sse-backend"
+  - "sse-frontend"

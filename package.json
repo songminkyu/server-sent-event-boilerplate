@@ -1,0 +1,35 @@
+{
+  "name": "sse-monorepo",
+  "version": "1.0.0",
+  "description": "Monorepo for SSE backend and frontend applications",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "pnpm --parallel run dev",
+    "build": "pnpm --recursive run build",
+    "lint": "pnpm --recursive run lint",
+    "test": "pnpm --recursive run test",
+    "clean": "pnpm --recursive exec rimraf dist node_modules .next .turbo",
+    "backend:dev": "pnpm --filter nestjs-sse-boilerplate run dev",
+    "backend:build": "pnpm --filter nestjs-sse-boilerplate run build",
+    "frontend:dev": "pnpm --filter sse-frontend run dev",
+    "frontend:build": "pnpm --filter sse-frontend run build"
+  },
+  "keywords": [
+    "monorepo",
+    "pnpm",
+    "workspace",
+    "sse",
+    "server-sent-events",
+    "nestjs",
+    "react",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}
