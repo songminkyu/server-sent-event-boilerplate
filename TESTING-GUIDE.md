@@ -1,14 +1,38 @@
-# SSE Project Testing Guide
+# 🧪 SSE Monorepo Testing Guide
 
 ## 📋 Overview
 
-This guide provides comprehensive testing instructions for the SSE (Server-Sent Events) backend and frontend project migrated to pnpm workspace structure.
+This guide provides comprehensive testing instructions for the SSE (Server-Sent Events) monorepo project with NestJS backend and React frontend, using pnpm workspace structure for efficient development and testing workflows.
 
 ## 🛠️ Prerequisites
 
-1. **Node.js 18+** installed
-2. **pnpm 8+** installed globally: `npm install -g pnpm`
+1. **Node.js 18+** installed ([Download](https://nodejs.org/))
+2. **pnpm 9+** installed globally: `npm install -g pnpm`
 3. **Terminal/Command Prompt** access
+4. **Git** installed (for cloning and version control)
+5. **Modern browser** (Chrome, Firefox, Safari, Edge) for SSE testing
+
+## 🚀 Project Structure
+
+```
+server-sent-event/
+├── docs/                    # 📚 Multi-language documentation
+│   ├── ko/                  # 🇰🇷 Korean docs
+│   ├── en/                  # 🇺🇸 English docs  
+│   └── ja/                  # 🇯🇵 Japanese docs
+├── sse-backend/             # 🔧 NestJS SSE server
+│   ├── src/controllers/     # SSE endpoint controllers
+│   ├── src/services/        # Core SSE services
+│   ├── src/guards/          # Authentication guards
+│   └── src/types/           # TypeScript definitions
+├── sse-frontend/            # ⚛️ React + Vite client
+│   ├── src/components/      # React components
+│   ├── src/hooks/           # Custom SSE hooks
+│   └── src/services/        # API services
+├── package.json             # Workspace root configuration
+├── pnpm-workspace.yaml      # PNPM workspace definition
+└── pnpm-lock.yaml           # Dependency lock file
+```
 
 ## 🚀 Quick Start Testing
 
@@ -292,11 +316,136 @@ curl -w "@curl-format.txt" -o /dev/null -s http://localhost:3000/system/status
 - [ ] No console errors in browser
 - [ ] Hot reload works in development
 
+## 🚀 Advanced Testing
+
+### Unit Testing
+
+#### Backend Unit Tests (Jest)
+```bash
+# Run backend unit tests
+pnpm --filter nestjs-sse-boilerplate run test
+
+# Run tests in watch mode
+pnpm --filter nestjs-sse-boilerplate run test:watch
+
+# Run tests with coverage
+pnpm --filter nestjs-sse-boilerplate run test:cov
+```
+
+#### Frontend Unit Tests (Vitest)
+```bash
+# Run frontend unit tests
+pnpm --filter sse-frontend run test
+
+# Run tests in UI mode
+pnpm --filter sse-frontend run test:ui
+
+# Run tests with coverage
+pnpm --filter sse-frontend run test:coverage
+```
+
+### Integration Testing
+
+#### End-to-End SSE Testing
+```bash
+# Start both servers for E2E testing
+pnpm run dev
+
+# In another terminal, run integration tests
+pnpm run test:e2e
+```
+
+### Browser Compatibility Testing
+
+Test SSE functionality across different browsers:
+
+1. **Chrome** (recommended for development)
+2. **Firefox** (good SSE support)  
+3. **Safari** (WebKit SSE implementation)
+4. **Edge** (Chromium-based, similar to Chrome)
+
+### Mobile Testing
+
+Test responsive design and mobile SSE support:
+
+1. Use Chrome DevTools device emulation
+2. Test on actual mobile devices
+3. Verify touch interactions work properly
+4. Check mobile network conditions
+
+## 🧪 Test Automation Scripts
+
+### Custom Test Scripts
+```bash
+# Full test suite (add to package.json)
+pnpm run test:full    # Runs all tests across workspace
+
+# Lint and format check
+pnpm run check        # Runs linting and type checking
+
+# Build verification
+pnpm run verify       # Builds and tests production builds
+```
+
+## 🔍 Monitoring & Debugging
+
+### SSE Connection Monitoring
+```javascript
+// Browser console monitoring script
+const monitorSSE = (url, token) => {
+  const eventSource = new EventSource(`${url}?token=${token}`);
+  
+  eventSource.onopen = () => {
+    console.log(`✅ Connected to ${url}`);
+  };
+  
+  eventSource.onmessage = (event) => {
+    console.log(`📨 Message from ${url}:`, JSON.parse(event.data));
+  };
+  
+  eventSource.onerror = (error) => {
+    console.error(`❌ Error on ${url}:`, error);
+  };
+  
+  return eventSource;
+};
+
+// Monitor all SSE endpoints
+const token = 'dGVzdDEyMzp0ZXN0dXNlcjp0ZXN0QGV4YW1wbGUuY29tOnVzZXIsYWRtaW4=';
+const notifications = monitorSSE('/notifications/stream', token);
+const realtime = monitorSSE('/realtime/stream', token);
+const chat = monitorSSE('/chat/stream', token);
+const system = monitorSSE('/system/status/stream');
+```
+
+### Backend Debugging
+```bash
+# Debug mode with inspect
+pnpm --filter nestjs-sse-boilerplate run start:debug
+
+# Enable verbose logging
+NODE_ENV=development DEBUG=* pnpm run backend:dev
+```
+
+### Frontend Debugging
+```bash
+# Start with source maps
+pnpm --filter sse-frontend run dev
+
+# Build with debugging info
+pnpm --filter sse-frontend run build --mode development
+```
+
 ## 🚀 Production Testing
 
+### Production Build Testing
 ```bash
 # Build both projects
 pnpm run build
+
+# Verify build artifacts exist
+ls -la sse-backend/dist/
+ls -la sse-frontend/dist/
 
 # Start backend in production mode
 cd sse-backend && pnpm run start:prod
@@ -304,3 +453,99 @@ cd sse-backend && pnpm run start:prod
 # Serve frontend build (optional)
 cd sse-frontend && pnpm run preview
 ```
+
+### Production Environment Checklist
+- [ ] Environment variables configured correctly
+- [ ] CORS settings for production domains
+- [ ] Authentication system properly configured
+- [ ] SSL/TLS certificates installed
+- [ ] Load balancer configured for sticky sessions
+- [ ] Health checks responding correctly
+- [ ] Monitoring and logging systems active
+- [ ] Error handling and graceful degradation working
+- [ ] Performance benchmarks met
+- [ ] Security headers configured
+
+### Docker Testing
+```bash
+# Build Docker images
+docker build -t sse-backend ./sse-backend
+docker build -t sse-frontend ./sse-frontend
+
+# Run with Docker Compose
+docker-compose up -d
+
+# Verify containers are running
+docker ps
+
+# Check logs
+docker logs sse-backend
+docker logs sse-frontend
+```
+
+## 📋 Documentation Testing
+
+### Documentation Verification
+```bash
+# Verify all documentation links work
+find docs/ -name "*.md" -exec echo "Checking {}" \;
+
+# Test code examples in documentation
+# (Manual process - copy/paste code examples and verify they work)
+```
+
+### Multi-language Documentation Testing
+1. **Korean documentation**: Navigate to `docs/ko/` and verify translations
+2. **English documentation**: Navigate to `docs/en/` and verify completeness  
+3. **Japanese documentation**: Navigate to `docs/ja/` and verify accuracy
+
+## 🎯 Performance Benchmarks
+
+### Expected Performance Metrics
+- **Backend startup**: < 3 seconds
+- **Frontend build**: < 30 seconds  
+- **SSE connection establishment**: < 200ms
+- **Message delivery latency**: < 50ms
+- **Memory usage (backend)**: < 150MB idle
+- **Memory usage (frontend)**: < 100MB
+- **CPU usage**: < 10% idle, < 50% under load
+
+### Benchmark Testing Tools
+```bash
+# Install performance testing tools
+npm install -g autocannon clinic
+
+# Backend performance testing
+autocannon -c 100 -d 30 http://localhost:3000/health
+
+# Memory and CPU profiling
+clinic doctor -- node sse-backend/dist/main.js
+```
+
+## ⚠️ Known Issues and Workarounds
+
+### Windows-Specific Issues
+- **Long path names**: Use `pnpm config set shamefully-hoist true` if needed
+- **Symlink permissions**: Run as administrator if symlink creation fails
+- **Port conflicts**: Check for other services using ports 3000/5173
+
+### macOS/Linux-Specific Issues  
+- **Permission issues**: Use `sudo` only if absolutely necessary
+- **Node version conflicts**: Use nvm to manage Node.js versions
+- **Process cleanup**: Use `killall node` to clean up hanging processes
+
+## 📞 Support & Help
+
+If you encounter issues during testing:
+
+1. **Check the troubleshooting section** in this guide
+2. **Review logs** for error messages and stack traces
+3. **Consult documentation** in `docs/` folder for detailed guides
+4. **Create an issue** with detailed error information and steps to reproduce
+5. **Join discussions** for community support and tips
+
+---
+
+**Happy Testing! 🎉** 
+
+For more detailed information, see the complete documentation in the `docs/` folder with guides available in Korean, English, and Japanese.

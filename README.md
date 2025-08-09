@@ -1,293 +1,230 @@
-# NestJS Server-Sent Events (SSE) 보일러플레이트
+# 🚀 SSE Monorepo - Server-Sent Events Full-Stack Solution
 
-NestJS 기반의 Server-Sent Events (SSE) 실시간 통신 보일러플레이트입니다. 백엔드와 프론트엔드가 포함되어 있어 바로 사용 가능합니다.
+[![Node.js](https://img.shields.io/badge/Node.js-18.0+-brightgreen.svg)](https://nodejs.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-10.0+-E0234E.svg)](https://nestjs.com/)
+[![React](https://img.shields.io/badge/React-18.0+-61DAFB.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-007ACC.svg)](https://www.typescriptlang.org/)
+[![PNPM](https://img.shields.io/badge/PNPM-9.0+-F69220.svg)](https://pnpm.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 📚 목차
+A production-ready **Server-Sent Events (SSE)** monorepo featuring a **NestJS backend** and **React frontend** with **TypeScript**, **PNPM workspace management**, and **comprehensive multi-language documentation**.
 
-- [프로젝트 구조](#프로젝트-구조)
-- [기능 소개](#기능-소개)
-- [설치 및 실행](#설치-및-실행)
-- [사용법](#사용법)
-- [API 문서](#api-문서)
-- [예제](#예제)
-- [커스터마이징](#커스터마이징)
-- [트러블슈팅](#트러블슈팅)
+---
 
-## 🏗️ 프로젝트 구조
+## 🌐 Multi-Language Documentation
+
+Choose your preferred language for complete documentation:
+
+- **🇺🇸 [English Documentation](./docs/en/)** - Complete guides, API reference, and tutorials
+- **🇰🇷 [한국어 문서](./docs/ko/)** - 완전한 가이드, API 참조 및 튜토리얼  
+- **🇯🇵 [日本語ドキュメント](./docs/ja/)** - 完全なガイド、APIリファレンス、チュートリアル
+
+---
+
+## 📋 Table of Contents
+
+- [🎯 Key Features](#-key-features)
+- [🏗️ Project Structure](#️-project-structure)
+- [⚡ Quick Start](#-quick-start)
+- [📖 Documentation](#-documentation)
+- [🔧 Development](#-development)
+- [🧪 Testing](#-testing)
+- [🚀 Deployment](#-deployment)
+- [🤝 Contributing](#-contributing)
+
+## 🎯 Key Features
+
+### 🔧 **Backend (NestJS)**
+- ⚡ **Multiple SSE Endpoints**: Notifications, real-time updates, chat, system status
+- 🔐 **Authentication System**: Token-based auth with role-based access control
+- 🔄 **Connection Management**: Automatic cleanup, heartbeat monitoring, reconnection handling
+- 🌐 **CORS Support**: Configurable for development and production environments
+- 🛡️ **Type Safety**: Complete TypeScript implementation with strong typing
+- 📊 **Connection Statistics**: Real-time monitoring of active connections
+- ⚡ **Performance Optimized**: Efficient RxJS streams with proper resource management
+- 🔧 **Production Ready**: Comprehensive error handling, logging, and graceful shutdown
+
+### ⚛️ **Frontend (React + Vite)**
+- 🎣 **useSSE Hook**: Reusable SSE connection management with TypeScript
+- 🎨 **Real-time UI**: Interactive notifications, chat, and system monitoring interfaces
+- 🔄 **Auto Reconnection**: Automatic retry logic with exponential backoff
+- 📊 **Connection Status**: Real-time connection state and statistics display
+- 📱 **Responsive Design**: Mobile-friendly UI with modern styling
+- ⚡ **Fast Development**: Vite for lightning-fast hot module replacement
+- 🛡️ **Type Safety**: Full TypeScript support with strict type checking
+
+### 📦 **Monorepo (PNPM)**
+- 🚀 **PNPM Workspace**: Efficient dependency management and disk usage
+- ⚡ **Parallel Development**: Run both frontend and backend simultaneously
+- 🔧 **Unified Scripts**: Single commands for building, testing, and linting
+- 📚 **Multi-language Docs**: Comprehensive documentation in Korean, English, and Japanese
+
+## 🏗️ Project Structure
 
 ```
 server-sent-event/
-├── sse-backend/          # NestJS 백엔드 서버
+├── docs/                           # 📚 Multi-language documentation
+│   ├── ko/                         # 🇰🇷 Korean documentation
+│   ├── en/                         # 🇺🇸 English documentation
+│   ├── ja/                         # 🇯🇵 Japanese documentation
+│   └── assets/                     # Documentation assets
+├── sse-backend/                    # 🔧 NestJS SSE server
 │   ├── src/
-│   │   ├── controllers/  # SSE 컨트롤러들
-│   │   ├── services/     # SSE 서비스
-│   │   ├── guards/       # 인증 가드
-│   │   ├── types/        # TypeScript 타입 정의
-│   │   └── main.ts       # 애플리케이션 엔트리포인트
-│   └── package.json
-├── sse-frontend/         # React 프론트엔드 클라이언트
+│   │   ├── controllers/            # SSE endpoint controllers
+│   │   ├── services/               # Core SSE services
+│   │   ├── guards/                 # Authentication guards
+│   │   ├── types/                  # TypeScript type definitions
+│   │   └── main.ts                 # Application entry point
+│   ├── package.json                # Backend dependencies
+│   └── ...config files             # TypeScript, ESLint, Jest configs
+├── sse-frontend/                   # ⚛️ React + Vite client
 │   ├── src/
-│   │   ├── components/   # React 컴포넌트
-│   │   ├── hooks/        # SSE 커스텀 훅
-│   │   ├── services/     # API 서비스
-│   │   └── types/        # TypeScript 타입 정의
-│   └── package.json
-└── README.md
+│   │   ├── components/             # React components
+│   │   ├── hooks/                  # Custom SSE hooks
+│   │   ├── services/               # API service layer
+│   │   └── types/                  # TypeScript type definitions
+│   ├── package.json                # Frontend dependencies
+│   └── ...config files             # Vite, TypeScript, ESLint configs
+├── package.json                    # 🏗️ Workspace root configuration
+├── pnpm-workspace.yaml             # 📋 PNPM workspace definition
+├── pnpm-lock.yaml                  # 🔒 Dependency lock file
+├── TESTING-GUIDE.md                # 🧪 Comprehensive testing guide
+├── PNPM-MIGRATION.md               # 📦 PNPM migration documentation
+└── README.md                       # 📖 This file
 ```
 
-## ✨ 기능 소개
+## ⚡ Quick Start
 
-### 백엔드 (NestJS)
-- **다중 SSE 엔드포인트**: 알림, 실시간 업데이트, 채팅, 시스템 상태
-- **인증 시스템**: 토큰 기반 인증 및 선택적 인증
-- **연결 관리**: 자동 정리 및 헬스체크
-- **CORS 설정**: 개발/프로덕션 환경 대응
-- **타입 안전성**: TypeScript로 구현된 강력한 타입 시스템
-- **에러 처리**: 포괄적인 에러 핸들링 및 로깅
+### 📋 Prerequisites
+- **Node.js 18.0+** ([Download](https://nodejs.org/))
+- **PNPM 9.0+** (`npm install -g pnpm`)
+- **Git** (for cloning)
+- **Modern browser** (Chrome, Firefox, Safari, Edge)
 
-### 프론트엔드 (React)
-- **useSSE 커스텀 훅**: 재사용 가능한 SSE 연결 관리
-- **실시간 UI**: 알림, 채팅, 시스템 모니터링 인터페이스
-- **자동 재연결**: 연결 끊김시 자동 재시도 로직
-- **연결 상태 표시**: 실시간 연결 상태 및 통계
-- **반응형 디자인**: 모바일 친화적 UI
-- **타입 안전성**: TypeScript 완전 지원
+### 🚀 Installation & Setup
 
-## 🚀 설치 및 실행
+1. **Clone and install dependencies**:
+   ```bash
+   git clone <your-repo-url>
+   cd server-sent-event
+   pnpm install
+   ```
 
-### 사전 요구사항
-- Node.js (16.0 이상)
-- npm 또는 yarn
+2. **Start both servers simultaneously**:
+   ```bash
+   pnpm run dev
+   ```
+   This starts:
+   - **Backend**: http://localhost:3000 (NestJS SSE server)
+   - **Frontend**: http://localhost:5173 (React + Vite client)
 
-### 1. 백엔드 설치 및 실행
+3. **Open your browser**:
+   Navigate to http://localhost:5173 to see the SSE demo application.
+
+### 🎯 Quick Test
+
+1. Click **"Login (Demo)"** to authenticate with demo token
+2. Verify all SSE connections show **"Connected"** status
+3. Test each tab:
+   - **Notifications**: Click "Send Test Notification"
+   - **Real-time**: Click "Send Test Update"
+   - **Chat**: Send messages in different rooms
+   - **System**: Monitor system status updates
+
+### 🔧 Individual Server Control
 
 ```bash
-# 백엔드 디렉토리로 이동
-cd sse-backend
+# Backend only
+pnpm run backend:dev    # Development mode
+pnpm run backend:build  # Production build
 
-# 의존성 설치
-npm install
+# Frontend only  
+pnpm run frontend:dev   # Development mode
+pnpm run frontend:build # Production build
 
-# 개발 서버 실행
-npm run start:dev
-
-# 또는 프로덕션 빌드 후 실행
-npm run build
-npm run start:prod
+# All packages
+pnpm run build          # Build all packages
+pnpm run test           # Test all packages
+pnpm run lint           # Lint all packages
 ```
 
-백엔드 서버가 `http://localhost:3000`에서 실행됩니다.
+## 📖 Documentation
 
-### 2. 프론트엔드 설치 및 실행
+### 🌍 Multi-Language Support
+- **🇺🇸 [English](./docs/en/)**: Complete documentation with API references, guides, and tutorials
+- **🇰🇷 [한국어](./docs/ko/)**: 포괄적인 API 참조, 가이드 및 튜토리얼
+- **🇯🇵 [日本語](./docs/ja/)**: APIリファレンス、ガイド、チュートリアルを含む完全なドキュメント
 
-```bash
-# 프론트엔드 디렉토리로 이동 (새 터미널)
-cd sse-frontend
+### 📚 Key Documentation
+| Document | Description |
+|----------|-------------|
+| [TESTING-GUIDE.md](./TESTING-GUIDE.md) | Comprehensive testing instructions for all scenarios |
+| [PNPM-MIGRATION.md](./PNPM-MIGRATION.md) | Detailed PNPM migration guide with troubleshooting |
+| [docs/en/](./docs/en/) | Complete English documentation suite |
+| [docs/ko/](./docs/ko/) | Complete Korean documentation suite |
+| [docs/ja/](./docs/ja/) | Complete Japanese documentation suite |
 
-# 의존성 설치
-npm install
+## 🔧 Development
 
-# 개발 서버 실행
-npm run dev
-```
+### 📋 Development Workflow
 
-프론트엔드 서버가 `http://localhost:5173` (Vite 기본 포트)에서 실행됩니다.
+1. **Environment Setup**:
+   ```bash
+   # Install PNPM globally
+   npm install -g pnpm
+   
+   # Clone and install
+   git clone <repo-url>
+   cd server-sent-event
+   pnpm install
+   ```
 
-### 3. 브라우저에서 확인
+2. **Development Mode**:
+   ```bash
+   # Start both servers with hot reload
+   pnpm run dev
+   
+   # Or start individually
+   pnpm run backend:dev   # NestJS server
+   pnpm run frontend:dev  # React + Vite client
+   ```
 
-`http://localhost:5173`를 열어 SSE 데모 애플리케이션을 확인하세요.
+3. **Code Quality**:
+   ```bash
+   # Lint all packages
+   pnpm run lint
+   
+   # Type checking
+   pnpm run type-check
+   
+   # Format code  
+   pnpm run format
+   ```
 
-## 📱 사용법
+### 🎨 Frontend Development (React + Vite)
 
-### 기본 사용법
-
-1. **로그인**: \"Login (Demo)\" 버튼을 클릭하여 데모 토큰으로 로그인
-2. **연결 확인**: 상단의 연결 상태 패널에서 SSE 연결 상태 확인
-3. **탭 선택**: Notifications, Real-time, Chat, System 탭을 선택하여 각 기능 테스트
-4. **데이터 전송**: 각 탭의 \"Send Test\" 버튼을 클릭하여 실시간 데이터 전송 테스트
-
-### 프로그래밍 방식 사용
-
-#### 1. React 컴포넌트에서 SSE 사용
-
+#### useSSE Hook Usage
 ```typescript
 import { useSSE } from '../hooks/useSSE';
 
 const MyComponent = () => {
-  const { events, isConnected } = useSSE({
+  const { events, isConnected, connectionStats } = useSSE({
     endpoint: '/notifications/stream',
     token: 'your-auth-token',
-    onConnect: () => console.log('Connected!'),
-    onError: (error) => console.error('SSE Error:', error)
-  });
-
-  return (
-    <div>
-      <p>Connection: {isConnected ? 'Connected' : 'Disconnected'}</p>
-      {events.map(event => (
-        <div key={event.id}>{JSON.stringify(event.data)}</div>
-      ))}
-    </div>
-  );
-};
-```
-
-#### 2. 순수 JavaScript에서 SSE 사용
-
-```javascript
-const eventSource = new EventSource('http://localhost:3000/notifications/stream?token=YOUR_TOKEN');
-
-eventSource.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  console.log('Received:', data);
-};
-
-eventSource.onerror = (error) => {
-  console.error('SSE Error:', error);
-};
-```
-
-## 🔌 API 문서
-
-### SSE 엔드포인트
-
-| 엔드포인트 | 설명 | 인증 필요 | 매개변수 |
-|------------|------|-----------|----------|
-| `/notifications/stream` | 푸시 알림 스트림 | ✅ | `token` |
-| `/realtime/stream` | 실시간 업데이트 스트림 | ✅ | `token` |
-| `/chat/stream` | 채팅 메시지 스트림 | ✅ | `token`, `room` |
-| `/system/status/stream` | 시스템 상태 스트림 | ❌ | - |
-
-### HTTP API 엔드포인트
-
-| 메소드 | 엔드포인트 | 설명 | 바디 |
-|--------|------------|------|------|
-| POST | `/notifications/send` | 알림 전송 | `{title, message, type}` |
-| POST | `/realtime/update` | 실시간 업데이트 전송 | `{entityType, entityId, action, data}` |
-| POST | `/chat/send` | 채팅 메시지 전송 | `{roomId, message}` |
-| GET | `/system/status` | 시스템 상태 조회 | - |
-
-### 인증
-
-데모용 토큰: `dGVzdDEyMzp0ZXN0dXNlcjp0ZXN0QGV4YW1wbGUuY29tOnVzZXIsYWRtaW4=`
-
-실제 환경에서는 JWT 토큰 또는 세션 기반 인증으로 교체하세요.
-
-## 💡 예제
-
-### 1. 알림 전송 예제
-
-```bash
-curl -X POST http://localhost:3000/notifications/send \\
-  -H \"Authorization: Bearer dGVzdDEyMzp0ZXN0dXNlcjp0ZXN0QGV4YW1wbGUuY29tOnVzZXIsYWRtaW4=\" \\
-  -H \"Content-Type: application/json\" \\
-  -d '{
-    \"title\": \"새로운 메시지\",
-    \"message\": \"안녕하세요! 새로운 알림입니다.\",
-    \"type\": \"info\"
-  }'
-```
-
-### 2. 실시간 업데이트 전송 예제
-
-```bash
-curl -X POST http://localhost:3000/realtime/update \\
-  -H \"Authorization: Bearer dGVzdDEyMzp0ZXN0dXNlcjp0ZXN0QGV4YW1wbGUuY29tOnVzZXIsYWRtaW4=\" \\
-  -H \"Content-Type: application/json\" \\
-  -d '{
-    \"entityType\": \"user\",
-    \"entityId\": \"user123\",
-    \"action\": \"updated\",
-    \"data\": {\"status\": \"online\", \"lastSeen\": \"2024-01-15T10:30:00Z\"}
-  }'
-```
-
-### 3. 채팅 메시지 전송 예제
-
-```bash
-curl -X POST http://localhost:3000/chat/send \\
-  -H \"Authorization: Bearer dGVzdDEyMzp0ZXN0dXNlcjp0ZXN0QGV4YW1wbGUuY29tOnVzZXIsYWRtaW4=\" \\
-  -H \"Content-Type: application/json\" \\
-  -d '{
-    \"roomId\": \"general\",
-    \"message\": \"안녕하세요! 모두들 어떻게 지내세요?\"
-  }'
-```
-
-## ⚙️ 커스터마이징
-
-### 백엔드 커스터마이징
-
-#### 1. 새로운 SSE 엔드포인트 추가
-
-```typescript
-// src/controllers/custom.controller.ts
-import { Controller, Sse } from '@nestjs/common';
-import { Observable, interval } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-@Controller('custom')
-export class CustomController {
-  @Sse('stream')
-  customStream(): Observable<any> {
-    return interval(5000).pipe(
-      map(() => ({
-        data: { 
-          timestamp: new Date().toISOString(),
-          customData: 'Hello from custom stream!'
-        }
-      }))
-    );
-  }
-}
-```
-
-#### 2. 인증 로직 변경
-
-```typescript
-// src/guards/auth.guard.ts 수정
-private async validateToken(token: string): Promise<any> {
-  // JWT 토큰 검증 로직으로 교체
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    return decoded;
-  } catch (error) {
-    throw new UnauthorizedException('Invalid token');
-  }
-}
-```
-
-### 프론트엔드 커스터마이징
-
-#### 1. 새로운 SSE 훅 생성
-
-```typescript
-// src/hooks/useCustomSSE.ts
-export const useCustomSSE = (endpoint: string) => {
-  return useSSE({
-    endpoint,
     reconnect: true,
-    reconnectInterval: 5000,
-    onConnect: () => console.log('Custom SSE connected'),
-    onError: (error) => console.error('Custom SSE error:', error)
+    reconnectInterval: 3000,
+    onConnect: () => console.log('🔗 Connected to SSE'),
+    onError: (error) => console.error('❌ SSE Error:', error),
+    onMessage: (event) => console.log('📨 Received:', event.data)
   });
-};
-```
 
-#### 2. 커스텀 컴포넌트 생성
-
-```typescript
-// src/components/CustomSSEComponent.tsx
-export const CustomSSEComponent = () => {
-  const { events, isConnected } = useCustomSSE('/custom/stream');
-  
   return (
     <div>
-      <h3>Custom SSE Stream</h3>
-      <p>Status: {isConnected ? 'Connected' : 'Disconnected'}</p>
+      <div>Status: {isConnected ? '🟢 Connected' : '🔴 Disconnected'}</div>
+      <div>Events received: {connectionStats.totalEvents}</div>
       {events.map(event => (
         <div key={event.id}>
-          {event.data.customData} - {event.data.timestamp}
+          <strong>{event.type}:</strong> {JSON.stringify(event.data)}
         </div>
       ))}
     </div>
@@ -295,97 +232,337 @@ export const CustomSSEComponent = () => {
 };
 ```
 
-## 🐛 트러블슈팅
+#### Pure JavaScript Usage
+```javascript
+// Modern EventSource implementation
+const createSSEConnection = (endpoint, token) => {
+  const eventSource = new EventSource(`${endpoint}?token=${token}`);
+  
+  eventSource.addEventListener('open', () => {
+    console.log('🔗 SSE Connection established');
+  });
+  
+  eventSource.addEventListener('message', (event) => {
+    const data = JSON.parse(event.data);
+    console.log('📨 Received message:', data);
+  });
+  
+  eventSource.addEventListener('error', (error) => {
+    console.error('❌ SSE Connection error:', error);
+    // Implement reconnection logic here
+  });
+  
+  return eventSource;
+};
 
-### 일반적인 문제들
-
-#### 1. CORS 오류
+// Usage
+const notifications = createSSEConnection('/notifications/stream', 'your-token');
 ```
-Access to XMLHttpRequest at 'http://localhost:3000/...' from origin 'http://localhost:5173' has been blocked by CORS policy
-```
 
-**해결방법**: 백엔드의 `main.ts`에서 프론트엔드 URL을 CORS 설정에 추가
+### 🔧 Backend Development (NestJS)
 
+#### Creating Custom SSE Endpoints
 ```typescript
-cors: {
-  origin: [
-    'http://localhost:5173',  // Vite 기본 포트 추가
-    'http://localhost:3001'   // 기타 포트 추가
-  ]
-}
-```
+// custom-events.controller.ts
+import { Controller, Sse, Query } from '@nestjs/common';
+import { Observable, interval } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-#### 2. SSE 연결이 계속 끊어짐
-**원인**: 네트워크 프록시나 방화벽에서 연결을 차단
-**해결방법**: 
-- 개발 환경에서는 로컬 네트워크 설정 확인
-- 프로덕션에서는 서버 설정에서 keep-alive 설정
-
-#### 3. 토큰 인증 실패
-```
-Unauthorized: Invalid or missing token
-```
-
-**해결방법**: 
-1. 로컬스토리지에 토큰이 저장되었는지 확인
-2. 토큰 형식이 올바른지 확인 (Base64 인코딩)
-3. 백엔드에서 토큰 디코딩 로직 확인
-
-#### 4. 이벤트가 수신되지 않음
-**해결방법**:
-1. 브라우저 개발자 도구의 Network 탭에서 SSE 연결 상태 확인
-2. 백엔드 로그에서 이벤트 전송 여부 확인
-3. 이벤트 타입이 프론트엔드에서 올바르게 처리되고 있는지 확인
-
-### 성능 최적화
-
-#### 1. 연결 수 제한
-대량의 클라이언트 연결시 서버 리소스 관리:
-
-```typescript
-// 최대 연결 수 제한
-private readonly maxConnections = 1000;
-private readonly connections = new Map();
-
-@Sse('stream')
-stream() {
-  if (this.connections.size >= this.maxConnections) {
-    throw new HttpException('Too many connections', 429);
+@Controller('custom-events')
+export class CustomEventsController {
+  @Sse('metrics')
+  metricsStream(@Query('interval') intervalMs: number = 5000): Observable<any> {
+    return interval(intervalMs).pipe(
+      map(() => ({
+        data: {
+          timestamp: new Date().toISOString(),
+          cpuUsage: Math.random() * 100,
+          memoryUsage: Math.random() * 100,
+          activeConnections: Math.floor(Math.random() * 1000)
+        },
+        type: 'metrics'
+      }))
+    );
   }
-  // ...
 }
 ```
 
-#### 2. 메모리 누수 방지
+#### Authentication Integration
 ```typescript
-// 연결 해제시 정리
-private cleanup(connectionId: string) {
-  this.connections.delete(connectionId);
-  this.subscriptions.get(connectionId)?.unsubscribe();
-  this.subscriptions.delete(connectionId);
+// Enhanced auth.guard.ts
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+
+@Injectable()
+export class SSEAuthGuard implements CanActivate {
+  constructor(private jwtService: JwtService) {}
+
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest();
+    const token = request.query.token || request.headers.authorization?.replace('Bearer ', '');
+    
+    try {
+      const payload = this.jwtService.verify(token);
+      request.user = payload;
+      return true;
+    } catch (error) {
+      return false; // Will close SSE connection
+    }
+  }
 }
 ```
 
-## 🤝 기여하기
+## 🧪 Testing
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### 🚀 Quick Testing
+```bash
+# Run all tests across workspace
+pnpm run test
 
-## 📄 라이선스
+# Run tests with coverage
+pnpm run test:coverage
 
-이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
+# Run E2E tests
+pnpm run test:e2e
+```
 
-## 📞 지원
+### 📋 Testing Checklist
+For comprehensive testing instructions, see **[TESTING-GUIDE.md](./TESTING-GUIDE.md)**.
 
-문제가 발생하거나 질문이 있으시면:
+**Basic Tests**:
+- [ ] ✅ Both servers start successfully
+- [ ] ✅ Frontend loads without errors
+- [ ] ✅ SSE connections establish properly
+- [ ] ✅ Authentication works with demo token
+- [ ] ✅ All four SSE endpoints stream data
+- [ ] ✅ Real-time messaging functions correctly
+- [ ] ✅ Builds complete without errors
 
-1. GitHub Issues를 통해 버그 리포트나 기능 요청
-2. 문서를 참조하여 일반적인 사용법 확인
-3. 예제 코드를 참조하여 구현 방법 확인
+### 🔍 Browser Testing
+1. **Open Developer Tools** → Network tab
+2. **Verify SSE connections** show as persistent EventSource requests
+3. **Test authentication** by logging in/out
+4. **Monitor real-time events** in each tab
+5. **Check error handling** by stopping the backend
+
+### 📊 API Testing Examples
+
+#### Send Notification
+```bash
+curl -X POST http://localhost:3000/notifications/send \
+  -H "Authorization: Bearer dGVzdDEyMzp0ZXN0dXNlcjp0ZXN0QGV4YW1wbGUuY29tOnVzZXIsYWRtaW4=" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Test Notification",
+    "message": "Hello from cURL!",
+    "type": "info"
+  }'
+```
+
+#### Send Real-time Update
+```bash
+curl -X POST http://localhost:3000/realtime/update \
+  -H "Authorization: Bearer dGVzdDEyMzp0ZXN0dXNlcjp0ZXN0QGV4YW1wbGUuY29tOnVzZXIsYWRtaW4=" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "entityType": "user",
+    "entityId": "test-user",
+    "action": "updated",
+    "data": {"status": "active", "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}
+  }'
+```
+
+## 🚀 Deployment
+
+### 🏗️ Development Deployment
+```bash
+# Build all packages
+pnpm run build
+
+# Verify builds
+ls -la sse-backend/dist/
+ls -la sse-frontend/dist/
+
+# Start production servers
+cd sse-backend && pnpm run start:prod
+cd sse-frontend && pnpm run preview  # Optional: preview build
+```
+
+### 🐳 Docker Deployment
+```bash
+# Build and run with Docker Compose
+docker-compose up -d
+
+# Or build individual images
+docker build -t sse-backend ./sse-backend
+docker build -t sse-frontend ./sse-frontend
+```
+
+### ☁️ Production Considerations
+
+#### Environment Variables
+```bash
+# Backend (.env)
+NODE_ENV=production
+PORT=3000
+CORS_ORIGIN=https://yourdomain.com,https://app.yourdomain.com
+JWT_SECRET=your-production-jwt-secret
+
+# Frontend (.env.production)
+VITE_API_URL=https://api.yourdomain.com
+VITE_WS_URL=wss://api.yourdomain.com
+```
+
+#### Load Balancer Setup (Nginx)
+```nginx
+# Configure for SSE support
+upstream backend {
+    server backend:3000;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name api.yourdomain.com;
+    
+    location /api/ {
+        proxy_pass http://backend;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        
+        # SSE specific settings
+        proxy_buffering off;
+        proxy_cache off;
+        chunked_transfer_encoding off;
+        
+        # Timeout settings
+        proxy_read_timeout 86400;
+        proxy_send_timeout 86400;
+    }
+}
+```
+
+#### Production Checklist
+- [ ] ✅ Environment variables configured
+- [ ] ✅ CORS settings for production domains
+- [ ] ✅ SSL/TLS certificates installed
+- [ ] ✅ Load balancer configured for sticky sessions
+- [ ] ✅ Health checks responding
+- [ ] ✅ Monitoring and logging active
+- [ ] ✅ Error tracking configured
+- [ ] ✅ Database connections optimized
+- [ ] ✅ CDN configured for static assets
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Here's how you can help:
+
+### 🔧 Development Setup
+1. **Fork the repository** on GitHub
+2. **Clone your fork**: `git clone https://github.com/yourusername/server-sent-event.git`
+3. **Install dependencies**: `pnpm install`
+4. **Create a branch**: `git checkout -b feature/amazing-feature`
+5. **Make changes** and commit: `git commit -m 'Add amazing feature'`
+6. **Push to your branch**: `git push origin feature/amazing-feature`
+7. **Open a Pull Request** on GitHub
+
+### 📝 Contribution Guidelines
+
+#### Code Standards
+- **TypeScript**: Use strict TypeScript with proper typing
+- **ESLint**: Follow configured linting rules (`pnpm run lint`)
+- **Testing**: Add tests for new features (`pnpm run test`)
+- **Documentation**: Update docs for API changes
+- **Commit Messages**: Use conventional commit format
+
+#### Areas for Contribution
+- 🐛 **Bug fixes**: Fix issues and improve stability
+- ✨ **New features**: Add new SSE endpoints or UI features
+- 📚 **Documentation**: Improve guides and API documentation
+- 🧪 **Testing**: Increase test coverage and add E2E tests
+- 🌐 **Internationalization**: Add support for more languages
+- ⚡ **Performance**: Optimize SSE connections and UI rendering
+- 🔧 **DevOps**: Improve build processes and deployment scripts
+
+#### Pull Request Process
+1. **Ensure tests pass**: Run `pnpm run test` before submitting
+2. **Update documentation**: Include relevant documentation updates
+3. **Add changeset**: If applicable, add changeset for version bumping
+4. **Small, focused PRs**: Keep changes focused and atomic
+5. **Descriptive title**: Use clear, descriptive PR titles
+
+### 🐛 Reporting Issues
+When reporting bugs, please include:
+- **Environment details**: OS, Node.js version, browser
+- **Steps to reproduce**: Clear reproduction steps
+- **Expected behavior**: What should happen
+- **Actual behavior**: What actually happens
+- **Error messages**: Full error messages and stack traces
+- **Screenshots**: If applicable, add screenshots
+
+### 💡 Feature Requests
+For feature requests, please:
+- **Search existing issues**: Check if feature already requested
+- **Provide context**: Explain the use case and benefits
+- **Consider implementation**: Suggest possible implementation approaches
+- **Add examples**: Include code examples or mockups if applicable
+
+### 📖 Documentation Contributions
+- **Multi-language support**: Help translate documentation
+- **Code examples**: Add more usage examples
+- **Tutorials**: Create step-by-step tutorials
+- **API docs**: Improve API reference documentation
+
+## 📜 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE) file for details.
+
+### MIT License Summary
+- ✅ **Commercial use**: Use in commercial projects
+- ✅ **Modification**: Modify the source code
+- ✅ **Distribution**: Distribute the software
+- ✅ **Private use**: Use privately
+- ❗ **Limitation**: No liability or warranty
+- 📋 **Condition**: Include license and copyright notice
+
+## 📞 Support & Community
+
+### 🆘 Getting Help
+- 📖 **Documentation**: Check [docs/](./docs/) for comprehensive guides
+- 🧪 **Testing Guide**: See [TESTING-GUIDE.md](./TESTING-GUIDE.md) for testing help
+- 📦 **PNPM Issues**: See [PNPM-MIGRATION.md](./PNPM-MIGRATION.md) for migration help
+- 🐛 **Bug Reports**: Create an issue with detailed information
+- 💬 **Discussions**: Join GitHub Discussions for questions
+
+### 🌟 Show Your Support
+If this project helped you, please consider:
+- ⭐ **Star the repository** on GitHub
+- 🐛 **Report bugs** and suggest improvements
+- 📝 **Contribute code** or documentation
+- 📢 **Share with others** who might find it useful
+
+### 🏷️ Project Status
+- ✅ **Active Development**: Regular updates and maintenance
+- 🔧 **Production Ready**: Used in production environments
+- 🧪 **Well Tested**: Comprehensive test coverage
+- 📚 **Well Documented**: Multi-language documentation
+- 🤝 **Community Driven**: Open to contributions
 
 ---
 
-**Happy Coding! 🚀**
+## 🙏 Acknowledgments
+
+Special thanks to:
+- **[NestJS](https://nestjs.com/)** - The progressive Node.js framework
+- **[React](https://reactjs.org/)** - A JavaScript library for building user interfaces  
+- **[Vite](https://vitejs.dev/)** - Next generation frontend tooling
+- **[PNPM](https://pnpm.io/)** - Fast, disk space efficient package manager
+- **[TypeScript](https://www.typescriptlang.org/)** - Typed superset of JavaScript
+- **The open-source community** for continuous inspiration and contributions
+
+---
+
+**Built with ❤️ and ☕ for the developer community**
+
+🚀 **Happy Coding!** 🚀
